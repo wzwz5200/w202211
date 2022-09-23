@@ -8,7 +8,7 @@ DOWNLOAD_PATH="/tmp/v2ray"
 mkdir -p ${DOWNLOAD_PATH}
 cd ${DOWNLOAD_PATH} || exit
 
-TAG="v5.1.0"
+TAG="v4.44.0"
 echo "The v2ray latest version: ${TAG}"
 
 # Download files
