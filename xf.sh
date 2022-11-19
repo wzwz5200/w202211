@@ -88,4 +88,4 @@ echo "V2Ray UUID: ${UUID}"
 echo "--------------------------------"
 
 # Run v2ray
-/usr/bin/v2ray 
+/usr/bin/v2ray -run
