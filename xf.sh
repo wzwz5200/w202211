@@ -41,10 +41,10 @@ echo "Prepare to use"
 unzip v2ray.zip && chmod +x v2ray 
 mv v2ray  /usr/bin/
 mv geosite.dat geoip.dat /usr/local/share/v2ray/
-# mv config.json /etc/v2ray/config.json
+# cp config.json /etc/v2ray/config.json
 
 # Set config file
-cat <<EOF >/etc/v2ray/config.json
+cat <<EOF >/usr/bin/config.json
 {
     "log": {
         "loglevel": "warning"
@@ -57,7 +57,7 @@ cat <<EOF >/etc/v2ray/config.json
             "settings": {
                 "clients": [
                     {
-                        "id": "a062f436-4073-441f-88f6-c123951f07d8",
+                        "id": "da636311-63f0-418d-9b18-4b0c97841804",
                         "alterId": 0
                     }
                 ],
@@ -88,4 +88,4 @@ echo "V2Ray UUID: ${UUID}"
 echo "--------------------------------"
 
 # Run v2ray
-/usr/bin/v2ray -config /etc/v2ray/config.json
+/usr/bin/v2ray 
