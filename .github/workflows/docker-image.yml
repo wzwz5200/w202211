@@ -25,4 +25,4 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: wzwz5200/wzwz123
+          tags: wzwz5200/wzwz5200
