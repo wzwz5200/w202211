@@ -53,12 +53,13 @@ cat <<EOF >/usr/bin/config.json
         {
             "listen": "0.0.0.0",
             "port": 8080,
-            "protocol": "vmess",
+            "protocol": "vless",
             "settings": {
+            "decryption": "none",
                 "clients": [
                     {
-                        "id": "da636311-63f0-418d-9b18-4b0c97841804",
-                        "alterId": 0
+                        "id": "da636311-63f0-418d-9b18-4b0c97841804"
+                    
                     }
                 ],
                 "disableInsecureEncryption": true
