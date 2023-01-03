@@ -18,55 +18,45 @@ echo "Downloading binary file: ${V2RAY_FILE}"
 echo "Downloading binary file: ${DGST_FILE}"
 
 # TAG=$(wget -qO- https://raw.githubusercontent.com/v2fly/docker/master/ReleaseTag | head -n1)
-wget -O ${DOWNLOAD_PATH}/v2ray.zip https://github.com/v2fly/v2ray-core/releases/download/${TAG}/${V2RAY_FILE} >/dev/null 2>&1
-wget -O ${DOWNLOAD_PATH}/v2ray.zip.dgst https://github.com/v2fly/v2ray-core/releases/download/${TAG}/${DGST_FILE} >/dev/null 2>&1
+wget -O ${DOWNLOAD_PATH}/xray.zip https://github.com/XTLS/Xray-core/releases/download/v1.7.0/Xray-linux-64.zip >/dev/null 2>&1
 
-if [ $? -ne 0 ]; then
-    echo "Error: Failed to download binary file: ${V2RAY_FILE} ${DGST_FILE}" && exit 1
-fi
-echo "Download binary file: ${V2RAY_FILE} ${DGST_FILE} completed"
 
 # Check SHA512
 
 # Prepare
 echo "Prepare to use"
-unzip v2ray.zip && chmod +x v2ray 
-mv v2ray  /usr/bin/
-mv geosite.dat geoip.dat /usr/local/share/v2ray/
+unzip xray.zip && chmod +x xray.zip
+mv xray  /usr/bin/
+mv geosite.dat geoip.dat /usr/local/share/xray/
 # cp config.json /etc/v2ray/config.json
 
 # Set config file
-cat <<EOF >/usr/bin/config.json
-{
-    "log": {
-        "loglevel": "warning"
-    },
-    "inbounds": [
-        {
-            "listen": "0.0.0.0",
-            "port": 8080,
-            "protocol": "vless",
-            "settings": {
-            "decryption": "none",
-                "clients": [
-                    {
-                        "id": "da636311-63f0-418d-9b18-4b0c97841804"
-                    
-                    }
-                ],
-                "disableInsecureEncryption": true
-            },
-            "streamSettings": {
-                "network": "ws"
-            }
-        }
-    ],
-    "outbounds": [
-        {
-            "protocol": "freedom"
-        }
-    ]
-}
+cat <<EOF >/usr/bin/config.yaml
+log:
+  loglevel: info
+dns:
+  servers:
+  - https+local://8.8.8.8/dns-query
+inbounds:
+- port: 8080
+  protocol: trojan
+  settings:
+    clients:
+    - password: "123456"
+  streamSettings:
+    network: ws
+    wsSettings:
+      path: /ws
+  sniffing:
+    enabled: true
+    destOverride:
+    - http
+    - tls
+outbounds:
+- protocol: freedom
+  tag: direct
+  settings:
+    domainStrategy: UseIPv4
 EOF
 
 # Clean
@@ -81,4 +71,4 @@ echo "V2Ray UUID: ${UUID}"
 echo "--------------------------------"
 
 # Run v2ray
-/usr/bin/v2ray run
+/usr/bin/xray -c /usr/bin/config.yaml
